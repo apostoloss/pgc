@@ -12,6 +12,13 @@ definitions:
       description:
         type: string
     type: object
+  health.HealthResponse:
+    properties:
+      status:
+        type: string
+      version:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -34,6 +41,19 @@ paths:
       summary: List all available assets
       tags:
       - assets
+  /healthz:
+    get:
+      description: Returns service status and version.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.HealthResponse'
+      summary: Health check
+      tags:
+      - health
   /users/{id}/favorites:
     get:
       description: Get all favorites for a specific user

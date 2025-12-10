@@ -28,7 +28,7 @@
 - Route handling, graceful shutdown.
 
 ## 6. Health/Status Endpoint
-- Add a `GET /health` endpoint.
+- Add a `GET /healthz` endpoint.
 - Returns service status and implementation version in a JSON response, e.g. `{ "status": "ok", "version": "1.0.0" }`.
 - Ensure this endpoint is documented in Swagger/OpenAPI.
 
