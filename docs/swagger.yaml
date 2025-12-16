@@ -1,0 +1,171 @@
+basePath: /
+definitions:
+  api.AddFavoriteRequest:
+    properties:
+      assetId:
+        type: string
+      description:
+        type: string
+    type: object
+  api.EditFavoriteRequest:
+    properties:
+      description:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API for managing user's favorite assets
+  title: Favorites API
+  version: "0.1"
+paths:
+  /assets:
+    get:
+      description: Get a list of all assets in the catalog
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: object
+            type: array
+      summary: List all available assets
+      tags:
+      - assets
+  /users/{id}/favorites:
+    get:
+      description: Get all favorites for a specific user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: object
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: List user's favorites
+      tags:
+      - favorites
+    post:
+      consumes:
+      - application/json
+      description: Add an asset to user's favorites
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Asset ID and optional description
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.AddFavoriteRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "404":
+          description: Asset not found
+          schema:
+            type: string
+        "409":
+          description: Asset already favorited
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Add a favorite
+      tags:
+      - favorites
+  /users/{id}/favorites/{assetID}:
+    delete:
+      description: Remove an asset from user's favorites
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Asset ID
+        in: path
+        name: assetID
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Remove a favorite
+      tags:
+      - favorites
+    patch:
+      consumes:
+      - application/json
+      description: Update the description of an existing favorite
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Asset ID
+        in: path
+        name: assetID
+        required: true
+        type: string
+      - description: New description
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.EditFavoriteRequest'
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "404":
+          description: Favorite not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Edit favorite description
+      tags:
+      - favorites
+swagger: "2.0"
