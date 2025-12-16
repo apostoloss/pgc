@@ -29,3 +29,14 @@ It is appreciated, though not required, if a Dockerfile is included.
 Just create a fork from the current repo and send it to us!
 
 Good luck, potential colleague!
+
+---
+
+## Assumptions/Requirements
+
+- Assets already exists (challenge mentions a huge list of assets)
+- No need for database. Implementation will be memory based only, assets will be read from a json during API startup
+- No authentication related implementation
+- Each user shuold have its own set of favorites
+- No need to create user management (as use can have or not favorites, we assume another component would handle non existent users)
+- CRUD only on favorites, since these are based on existing Assets (we do not manage assets) then asset existence is required
