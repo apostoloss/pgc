@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  # Single API instance
+  api:
+    build: .
+    container_name: favorites-api
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - CATALOG_PATH=/app/sample_data/seed_assets.json
+      - INSTANCE_ID=docker-api
+    restart: unless-stopped
