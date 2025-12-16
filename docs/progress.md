@@ -7,7 +7,7 @@ This file tracks implementation progress for key steps as defined in `IMPLEMENTA
 - [x] Define asset models (`internal/models/assets.go`)
 - [x] Implement in-memory store (`internal/store/store.go`)
 - [x] Create REST API endpoints (`internal/api/handlers.go`)
-- [ ] Add GitHub Actions workflow (`.github/workflows/go.yml`)
+- [x] Add GitHub Actions workflow (`.github/workflows/go.yml`)
 - [x] Set up basic server (`cmd/server/main.go`)
 - [x] Add health/status endpoint (`pkg/health/health.go`)
 - [x] Write tests for models and store
