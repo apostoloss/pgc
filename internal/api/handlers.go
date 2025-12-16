@@ -7,6 +7,7 @@ import (
 
 	"my-solution/internal/catalog"
 	"my-solution/internal/store"
+	"my-solution/pkg/health"
 
 	"github.com/gorilla/mux"
 )
@@ -20,15 +21,22 @@ type API struct {
 func (api *API) RegisterHandlers(r *mux.Router) {
 	// Browse available assets (catalog)
 	r.HandleFunc("/assets", api.listAssetsHandler).Methods("GET")
-
-	// List favorites for a user
+	r.HandleFunc("/healthz", healthHandler).Methods("GET")
 	r.HandleFunc("/users/{id}/favorites", api.listFavoritesHandler).Methods("GET")
-	// Add asset to user favorites
 	r.HandleFunc("/users/{id}/favorites", api.addFavoriteHandler).Methods("POST")
-	// Remove asset from user favorites
 	r.HandleFunc("/users/{id}/favorites/{assetID}", api.removeFavoriteHandler).Methods("DELETE")
-	// Edit favorite description
 	r.HandleFunc("/users/{id}/favorites/{assetID}", api.editFavoriteHandler).Methods("PATCH")
+}
+
+// healthHandler returns service health and version.
+// @Summary Health check
+// @Description Returns service status and version.
+// @Tags health
+// @Produce json
+// @Success 200 {object} health.HealthResponse
+// @Router /healthz [get]
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	health.Handler(w, r)
 }
 
 // listAssetsHandler returns the catalog of all available assets.
